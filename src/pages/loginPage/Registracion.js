@@ -1,26 +1,91 @@
 import styled from "styled-components"
+import { useNavigate } from "react-router-dom"
+import { useState } from "react"
+import axios from "axios"
 
-export default function Registracion(){
+export default function Registracion() {
+    const navigate = useNavigate()
+    const [isAble, setAble] = useState(true)
+    const [form, setForm] = useState({ name: "", email: "", password: "" , checkPassword: ""})
+    let checkPassword
+
+    function fillform(e) {
+        setForm({ ...form, [e.target.name]: e.target.value })
+    }
+
+    function submitForm(e) {
+        e.preventDefault()
+        const user = {
+            name: form.name,
+            email: form .email,
+            password: form.password
+        }
+        const URL = "http://localhost:5000/sign-up"
+        const promisse = axios.post(URL, user)
+        promisse.then(res => {
+            setAble(false)
+            navigate("/")
+        })
+        promisse.catch(err => {
+            alert(err.response.data.message)
+            setAble(true)
+        })
+
+
+    }
+
     return (
-    <Container>
-        <div>MyWallet</div>
-        <form>
-            <input placeholder="Nome"/>
-            <input placeholder="E-mail"/>
-            <input placeholder="Senha"/>
-            <input placeholder="Confirme a senha"/>
+        <Container>
+            <div>MyWallet</div>
+            <form onSubmit={submitForm}>
+                <input
+                    placeholder="Nome"
+                    name="name"
+                    type="name"
+                    value={form.name}
+                    onChange={fillform}
+                    disabled={isAble ? "" : "disabled"}
+                    required
+                />
+                <input
+                    placeholder="E-mail"
+                    name="email"
+                    type="email"
+                    value={form.email}
+                    onChange={fillform}
+                    disabled={isAble ? "" : "disabled"}
+                    required
+                />
+                <input
+                    placeholder="Senha"
+                    name="password"
+                    type="password"
+                    value={form.password}
+                    onChange={fillform}
+                    disabled={isAble ? "" : "disabled"}
+                    required
+                />
+                <input
+                    placeholder="Confirme a senha"
+                    name="checkPassword"
+                    type="password"
+                    value={checkPassword}
+                    onChange={fillform}
+                    disabled={isAble ? "" : "disabled"}
+                    required
+                />
 
-            <button>Cadastrar</button>
-        </form>
-        <p>Já tem uma conta? Entre agora!</p>
+                <button disabled={isAble ? "" : "disabled"} type="submit">Cadastrar</button>
+            </form>
+            <p onClick={() => navigate("/")}>Já tem uma conta? Entre agora!</p>
 
-    </Container>
+        </Container>
     )
 }
 
 const Container = styled.div`
     background-color: #9257BE;
-    padding-top: 140px;
+    padding-top: 100px;
     display: flex;
     flex-direction: column;
     justify-content: center;

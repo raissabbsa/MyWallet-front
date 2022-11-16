@@ -1,6 +1,9 @@
 import styled from "styled-components"
+import { useNavigate } from "react-router-dom"
 
 export default function Login(){
+    const navigate = useNavigate()
+
     return(
     <Container>
         <div>MyWallet</div>
@@ -9,14 +12,14 @@ export default function Login(){
             <input placeholder="Senha"/>
             <button>Entrar</button>
         </form>
-        <p>Primeira vez? Cadastre-se!</p>
+        <p onClick={() => navigate("/cadastro")}>Primeira vez? Cadastre-se!</p>
 
     </Container>)
 }
 
 const Container = styled.div`
     background-color: #9257BE;
-    padding-top: 159px;
+    padding-top: 120px;
     display: flex;
     flex-direction: column;
     justify-content: center;
