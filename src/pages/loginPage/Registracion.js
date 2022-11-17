@@ -15,18 +15,19 @@ export default function Registracion() {
 
     function submitForm(e) {
         e.preventDefault()
+        setAble(false)
+
         const user = {
             name: form.name,
-            email: form .email,
+            email: form.email,
             password: form.password
         }
         const URL = "http://localhost:5000/sign-up"
-        const promisse = axios.post(URL, user)
-        promisse.then(res => {
-            setAble(false)
+        const promise = axios.post(URL, user)
+        promise.then(res => {
             navigate("/")
         })
-        promisse.catch(err => {
+        promise.catch(err => {
             alert(err.response.data.message)
             setAble(true)
         })
