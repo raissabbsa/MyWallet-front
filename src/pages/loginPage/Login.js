@@ -7,7 +7,7 @@ import { useState } from "react"
 
 export default function Login(){
     const navigate = useNavigate()
-    const {setToken, setUser} = useContext(TokenContext)
+    const {setToken} = useContext(TokenContext)
     const [form,setForm] = useState({email:"", password:""})
     const [loading, setLoading] = useState(false)
 
@@ -23,7 +23,6 @@ export default function Login(){
         promise.then(res => {
             navigate("/hoje")
             setToken(res.data.token)
-            setUser(res.data.user)
         })
         promise.catch(err => {
             setLoading(false)  
@@ -86,7 +85,7 @@ const Container = styled.div`
 
     button{
         background-color: #A863D6;
-        width: 80vh;
+        width: 83vh;
         height: 58px;
         margin-bottom: 13px;
         text-align: center;

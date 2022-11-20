@@ -1,25 +1,74 @@
 import styled from "styled-components"
+import { TokenContext } from "../../contexts/TokenContext"
+import { useContext, useEffect, useState } from "react"
+import axios from "axios"
+import Records from "./Records"
+import { useNavigate } from "react-router-dom"
 
-export default function Today(){
+export default function Today() {
+    const navigate = useNavigate()
+    const { token } = useContext(TokenContext)
+    const [infos, setInfos] = useState([])
+    const [user, setUser] = useState()
+
+    useEffect(getInfos, [token])
+
+    function getInfos() {
+        const URL = "http://localhost:5000/registracion"
+        const config = {
+            headers: {
+                'authorization': `Bearer ${token}`
+            }
+        }
+        if (token) {
+            const promise = axios.get(URL, config)
+            promise.then(res => {
+                setUser(res.data.user)
+                setInfos(res.data.registry)
+            })
+            promise.catch(err => {
+                console.log(err)
+            })
+        }
+    }
+    function exit() {
+        const URL = "http://localhost:5000/user"
+        const config = {
+            headers: {
+                'authorization': `Bearer ${token}`
+            }
+        }
+        if(token){
+            const promise = axios.delete(URL, config)
+            promise.then(res => {
+                navigate("/")
+            })
+            promise.catch(err => {
+                console.log(err)
+            })
+        }
+    }
+
+
     return (
-    <Container>
-        <div>
-            <h1>Olá fulano</h1>
-            <ion-icon name="exit-outline"></ion-icon>
-        </div>
-        <Registry>
-            <p>Não há registros de entrada ou saída</p>  
-        </Registry>
-        <Botoes>
+        <Container>
             <div>
-                Nova entrada
+                <h1>{user ? `Olá ${user.name}` : ""}</h1>
+                <ion-icon onClick={exit} name="exit-outline"></ion-icon>
             </div>
-            <div>
-                Nova saída
-            </div>
-        </Botoes>
+            <Records infos={infos} />
+            <Botoes>
+                <div>
+                    <ion-icon onClick={() => navigate("/entrada")} name="add-circle-outline"></ion-icon>
+                    <p>Nova entrada</p>
+                </div>
+                <div>
+                    <ion-icon onClick={() => navigate("/saida")} name="remove-circle-outline"></ion-icon>
+                    <p>Nova saída</p>
+                </div>
+            </Botoes>
 
-    </Container>)
+        </Container>)
 }
 
 const Container = styled.div`
@@ -28,36 +77,34 @@ const Container = styled.div`
     justify-content: center;
     align-items: center;
     padding-top:  25px;
+    ion-icon{
+        font-size: 24px;
+        cursor: pointer;
+    }
     &>div{
         display: flex;
         justify-content: space-between;
+        width: 70vh;
         font-size: 20px;
         font-weight: 700;
         color: white;
         margin-bottom: 22px;
     }
 `
-const Registry = styled.div`
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    width: 70vh;
-    height: 80vh;
-    background-color: #FFFFFF;
-    &>p{
-        color: #868686;
-        margin: auto;
-        font-weight: 400;
-    }
-    border-radius: 10px;
-`
+
 const Botoes = styled.div`
     display: flex;
     justify-content: space-between;
     width: 70vh;
+    ion-icon{
+        font-size: 30px;
+        cursor: pointer;
+    }
     
     &>div{
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
         width: 30vh;
         height: 114px;
         background-color: #A863D6;

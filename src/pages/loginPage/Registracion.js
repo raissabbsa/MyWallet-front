@@ -6,7 +6,7 @@ import axios from "axios"
 export default function Registracion() {
     const navigate = useNavigate()
     const [isAble, setAble] = useState(true)
-    const [form, setForm] = useState({ name: "", email: "", password: "" , checkPassword: ""})
+    const [form, setForm] = useState({ name: "", email: "", password: "", checkPassword: "" })
     let checkPassword
 
     function fillform(e) {
@@ -22,15 +22,21 @@ export default function Registracion() {
             email: form.email,
             password: form.password
         }
-        const URL = "http://localhost:5000/sign-up"
-        const promise = axios.post(URL, user)
-        promise.then(res => {
-            navigate("/")
-        })
-        promise.catch(err => {
-            alert(err.response.data.message)
+        if (form.password === form.checkPassword) {
+            const URL = "http://localhost:5000/sign-up"
+            const promise = axios.post(URL, user)
+            promise.then(res => {
+                navigate("/")
+            })
+            promise.catch(err => {
+                alert(err.response.data.message)
+                setAble(true)
+            })
+        }else{
             setAble(true)
-        })
+            alert("As senhas precisam ser iguais")
+        }
+
 
 
     }
@@ -114,7 +120,7 @@ const Container = styled.div`
 
     button{
         background-color: #A863D6;
-        width: 80vh;
+        width: 83vh;
         height: 58px;
         margin-bottom: 13px;
         text-align: center;
