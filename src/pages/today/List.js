@@ -7,7 +7,7 @@ export default function Lis({ items }) {
                 <p>{items.date}</p>
                 <h2>{items.description}</h2>
             </Infos>
-            <h3>{items.value}</h3>
+            <h3>{Number(items.value).toFixed(2)}</h3>
         </Container>
     )
 }

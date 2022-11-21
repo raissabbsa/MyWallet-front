@@ -15,7 +15,7 @@ export default function NewEntry() {
 
     function sendEntry(e) {
         e.preventDefault()
-        const URL = "http://localhost:5000/registracion"
+        const URL = "https://my-wallet-ccyq.onrender.com/user"
         const config = {
             headers: {
                 "Authorization": `Bearer ${token}`

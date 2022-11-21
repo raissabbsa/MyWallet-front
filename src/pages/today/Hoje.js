@@ -14,7 +14,7 @@ export default function Today() {
     useEffect(getInfos, [token])
 
     function getInfos() {
-        const URL = "http://localhost:5000/registracion"
+        const URL = "https://my-wallet-ccyq.onrender.com/user"
         const config = {
             headers: {
                 'authorization': `Bearer ${token}`
@@ -31,8 +31,9 @@ export default function Today() {
             })
         }
     }
+
     function exit() {
-        const URL = "http://localhost:5000/user"
+        const URL = "https://my-wallet-ccyq.onrender.com/user"
         const config = {
             headers: {
                 'authorization': `Bearer ${token}`

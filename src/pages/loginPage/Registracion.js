@@ -23,7 +23,7 @@ export default function Registracion() {
             password: form.password
         }
         if (form.password === form.checkPassword) {
-            const URL = "http://localhost:5000/sign-up"
+            const URL = "https://my-wallet-ccyq.onrender.com/sign-up"
             const promise = axios.post(URL, user)
             promise.then(res => {
                 navigate("/")

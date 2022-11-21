@@ -18,7 +18,7 @@ export default function Login(){
     function login(e){
         e.preventDefault()
         setLoading(true)
-        const URL = "http://localhost:5000/sign-in"
+        const URL = "https://my-wallet-ccyq.onrender.com/sign-in"
         const promise = axios.post(URL, form)
         promise.then(res => {
             navigate("/hoje")
