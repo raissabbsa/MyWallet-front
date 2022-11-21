@@ -17,7 +17,7 @@ export default function Records({infos}){
                 {infos.map((items) => <List key={items._id} items={items}/>)}
                 <Saldo soma = {soma}>
                     <p>Saldo</p>
-                    <h1>{soma.toFixed(2)}</h1>
+                    <h1>{soma.toFixed(1)}</h1>
 
                 </Saldo>
             </ContainerItems>
